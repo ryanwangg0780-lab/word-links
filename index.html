@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Word Links</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <canvas id="spark-field" aria-hidden="true"></canvas>
+
+    <main class="app-shell">
+      <section class="game-panel" aria-label="Word Links game">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Build the crossword as you play</p>
+            <h1>Word Links</h1>
+          </div>
+          <div class="score-cluster" aria-label="Game score">
+            <div>
+              <span>Score</span>
+              <strong id="score">0</strong>
+            </div>
+            <div>
+              <span>Links</span>
+              <strong id="links">0</strong>
+            </div>
+            <div>
+              <span>Turn</span>
+              <strong id="timer">60</strong>
+            </div>
+          </div>
+        </header>
+
+        <div class="board-wrap">
+          <div id="board" class="board" aria-label="Word board"></div>
+          <div id="link-layer" class="link-layer" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <aside class="control-panel" aria-label="Word controls">
+        <div class="panel-block">
+          <div class="mini-heading">
+            <span>Your letters</span>
+            <button id="shuffle" class="icon-button" type="button" aria-label="Shuffle letters" title="Shuffle letters">
+              <span aria-hidden="true">↻</span>
+            </button>
+          </div>
+          <div id="rack" class="rack" aria-label="Letter rack"></div>
+        </div>
+
+        <form id="play-form" class="play-form">
+          <label for="word-input">Word</label>
+          <div class="word-row">
+            <input id="word-input" name="word" autocomplete="off" maxlength="11" placeholder="type a word" />
+            <button class="primary-button" type="submit">Place</button>
+          </div>
+
+          <fieldset class="direction-picker">
+            <legend>Direction</legend>
+            <label>
+              <input type="radio" name="direction" value="across" checked />
+              <span>Across</span>
+            </label>
+            <label>
+              <input type="radio" name="direction" value="down" />
+              <span>Down</span>
+            </label>
+          </fieldset>
+        </form>
+
+        <div class="panel-block">
+          <div class="mini-heading">
+            <span>Next move</span>
+            <button id="hint" class="icon-button" type="button" aria-label="Show a hint" title="Show a hint">
+              <span aria-hidden="true">?</span>
+            </button>
+          </div>
+          <p id="message" class="message">Pick a square, make a word, and link it to a letter already on the board.</p>
+        </div>
+
+        <div class="panel-block rules">
+          <h2>How It Plays</h2>
+          <p>Every new word must touch the board. Shared letters create links, and links are worth more than plain tiles.</p>
+        </div>
+
+        <button id="new-game" class="secondary-button" type="button">New Game</button>
+      </aside>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
