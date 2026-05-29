@@ -13,7 +13,7 @@ const canvas = document.querySelector("#spark-field");
 const ctx = canvas.getContext("2d");
 
 const letters = "EEEEEEEEEEEAAAAAAAIIIIIIIOOOOOOONNNNNNRRRRRRTTTTTTLLLLSSSSUUUUDDDDGGGBBCCMMPPFFHHVVWWYYKJXQZ";
-const dictionary = [
+const hintWords = [
   "LINK", "WORD", "WORDS", "PLAY", "GAME", "GAMES", "BOARD", "BOARDS", "CROSS", "CROSSWORD",
   "CLUE", "CLUES", "CHAIN", "CHAINS", "TILE", "TILES", "LETTER", "LETTERS", "MAKE", "MAKER",
   "BUILD", "BUILDER", "SPARK", "SPARKS", "SMART", "START", "STAR", "STARE", "RATE", "RATED",
@@ -24,7 +24,6 @@ const dictionary = [
   "BRAIN", "BRAINS", "TRAIN", "TRAINS", "TRAIL", "TRAILS", "VIBE", "VIBES", "SHIFT",
   "SHIFTS", "QUEST", "QUESTS", "QUICK", "QUIET", "NOISE", "POINT", "POINTS", "ROUND"
 ];
-const validWords = new Set(dictionary);
 const bonuses = new Map([
   ["2,2", "2X"], ["2,10", "2X"], ["10,2", "2X"], ["10,10", "2X"],
   ["0,6", "+5"], ["6,0", "+5"], ["6,12", "+5"], ["12,6", "+5"],
@@ -126,7 +125,7 @@ function getPath(word, start, direction) {
 function validateMove(word, path) {
   if (!selected) return "Pick a starting square on the board.";
   if (word.length < 3) return "Use at least three letters.";
-  if (!validWords.has(word)) return "That word is not in this prototype dictionary yet.";
+  if (!/[AEIOUY]/.test(word)) return "Use a word with at least one vowel.";
   if (path.some(({ r, c }) => r < 0 || c < 0 || r >= size || c >= size)) return "That word runs off the board.";
 
   const needed = [];
@@ -280,9 +279,9 @@ function shuffleRack() {
 }
 
 function showHint() {
-  const options = dictionary.filter((word) => word.length <= 7 && canSpendLetters([...word]));
+  const options = hintWords.filter((word) => word.length <= 7 && canSpendLetters([...word]));
   const hint = options[Math.floor(Math.random() * options.length)] || "LINK";
-  setMessage(`Try making ${hint}, or place a word that reuses one letter already on the grid.`, "good");
+  setMessage(`Try making ${hint}, or type your own word that reuses one letter already on the grid.`, "good");
 }
 
 function sizeCanvas() {
